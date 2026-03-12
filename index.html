@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chain Reaction</title>
+  <meta name="description" content="A browser-based Chain Reaction strategy game with multiplayer and AI modes. Choose from three grid styles and compete to control the board!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ SETUP SCREEN ═══════════════ -->
+  <div id="setup-screen" class="screen active">
+    <div class="setup-container">
+      <div class="logo-area">
+        <div class="logo-icon">⚛</div>
+        <h1 class="logo-text">Chain<span>Reaction</span></h1>
+        <p class="logo-sub">Explode. Conquer. Dominate.</p>
+      </div>
+
+      <!-- Game Mode Toggle -->
+      <section class="setup-section">
+        <h2 class="section-label">Game Mode</h2>
+        <div class="mode-toggle" id="mode-toggle">
+          <button class="mode-btn active" id="btn-multiplayer" data-mode="multiplayer">
+            <span class="mode-icon">👥</span>
+            <span class="mode-name">Multiplayer</span>
+          </button>
+          <button class="mode-btn" id="btn-ai" data-mode="ai">
+            <span class="mode-icon">🤖</span>
+            <span class="mode-name">vs AI</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Grid Style Picker -->
+      <section class="setup-section">
+        <h2 class="section-label">Grid Style</h2>
+        <div class="grid-style-picker" id="grid-style-picker">
+          <label class="style-card active" id="style-classic" data-style="classic">
+            <input type="radio" name="grid-style" value="classic" checked hidden />
+            <div class="style-preview classic-preview">
+              <div class="preview-grid">
+                <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+                <div class="preview-cell"></div><div class="preview-cell pv-orb"></div><div class="preview-cell"></div>
+                <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+              </div>
+            </div>
+            <div class="style-info">
+              <span class="style-name">Classic</span>
+              <span class="style-dims">7 × 9</span>
+            </div>
+          </label>
+
+          <label class="style-card" id="style-neon" data-style="neon">
+            <input type="radio" name="grid-style" value="neon" hidden />
+            <div class="style-preview neon-preview">
+              <div class="preview-grid">
+                <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+                <div class="preview-cell"></div><div class="preview-cell pv-orb neon-orb"></div><div class="preview-cell"></div>
+                <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+              </div>
+            </div>
+            <div class="style-info">
+              <span class="style-name">Neon</span>
+              <span class="style-dims">6 × 8</span>
+            </div>
+          </label>
+
+        </div>
+
+      </section>
+
+      <!-- Player Count (hidden in AI mode) -->
+      <section class="setup-section" id="player-count-section">
+        <h2 class="section-label">Number of Players</h2>
+        <div class="count-selector">
+          <button class="count-btn" id="count-minus" aria-label="Decrease players">−</button>
+          <span class="count-value" id="player-count-display">2</span>
+          <button class="count-btn" id="count-plus" aria-label="Increase players">+</button>
+        </div>
+      </section>
+
+      <!-- Player Names -->
+      <section class="setup-section" id="player-names-section">
+        <h2 class="section-label">Player Names</h2>
+        <div class="player-inputs" id="player-inputs"></div>
+      </section>
+
+      <button class="start-btn" id="start-btn">
+        <span>Launch Game</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ GAME SCREEN ═══════════════ -->
+  <div id="game-screen" class="screen">
+    <header class="game-header">
+      <button class="back-btn" id="back-btn" aria-label="Back to menu">← Menu</button>
+      <div class="turn-indicator" id="turn-indicator">
+        <div class="turn-orb" id="turn-orb"></div>
+        <span id="turn-label">Player 1's Turn</span>
+      </div>
+      <button class="restart-btn" id="restart-btn" aria-label="Restart game">↺ Restart</button>
+    </header>
+
+    <main class="game-main">
+      <!-- Player Score Panel -->
+      <div class="score-panel" id="score-panel"></div>
+
+      <!-- Grid -->
+      <div class="grid-wrapper">
+        <div class="game-grid" id="game-grid"></div>
+      </div>
+    </main>
+
+    <!-- AI Thinking Overlay -->
+    <div class="ai-thinking" id="ai-thinking">
+      <div class="think-dot"></div>
+      <div class="think-dot"></div>
+      <div class="think-dot"></div>
+      <span>AI is thinking…</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ WIN OVERLAY ═══════════════ -->
+  <div id="win-overlay" class="overlay hidden">
+    <div class="win-card">
+      <div class="win-emoji">🏆</div>
+      <h2 class="win-title" id="win-title">Player 1 Wins!</h2>
+      <p class="win-sub" id="win-sub">Chain reactions mastered.</p>
+      <div class="win-actions">
+        <button class="win-btn primary" id="play-again-btn">Play Again</button>
+        <button class="win-btn secondary" id="main-menu-btn">Main Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
