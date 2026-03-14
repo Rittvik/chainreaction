@@ -4,7 +4,7 @@ import { AIPlayer } from './AIPlayer.js';
 
 export class GameEngine {
   /**
-   * @param {object} config   - { mode, gridStyle, names }
+   * @param {object} config   - { mode, gridStyle, players: [{name, color, glow, emoji}] }
    * @param {object} gridDef  - { cols, rows } from GRID_STYLES
    * @param {function} onUpdate - called after every board mutation
    */
@@ -15,11 +15,12 @@ export class GameEngine {
     this.cols      = gridDef.cols;
     this.onUpdate  = onUpdate;
 
-    this.players = config.names.map((name, i) => ({
+    this.players = (config.players || config.names.map(name => ({ name }))).map((p, i) => ({
       id:    i,
-      name,
-      color: PLAYER_COLORS[i].color,
-      glow:  PLAYER_COLORS[i].glow,
+      name:  p.name,
+      color: p.color  || PLAYER_COLORS[i].color,
+      glow:  p.glow   || PLAYER_COLORS[i].glow,
+      emoji: p.emoji  || null,
       orbs:  0,
       alive: true,
       isAI:  config.mode === 'ai' && i === 1,
